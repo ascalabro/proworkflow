@@ -38,12 +38,8 @@ class Project extends ApiResource {
 
     const RESOURCE_NAME = "projects";
 
-    /**
-     * @inheritdoc
-     */
-    public function __construct()
-    {
-        $this->_setResourceName('projects');
+    public static function instance() {
+        return new self(self::RESOURCE_NAME);
     }
 
     /**
@@ -78,12 +74,6 @@ class Project extends ApiResource {
             'privatenotes' => 'Private Notes',
             'type' => 'Type',
         ];
-    }
-
-
-    public static function getResourcePath()
-    {
-        return "/" . self::RESOURCE_NAME . "/";
     }
 
 }

@@ -13,4 +13,4 @@ $creds = require_once 'config.php';
 
 // Use the API client by instantiating an instance with your PWF credentials
 $c = new ApiClient($creds);
-print_r($c->projects());
+print_r($c->tasks());

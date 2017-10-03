@@ -38,36 +38,10 @@ use proworkflow\interfaces\HasResourceEndpointInterface;
  */
 class Task extends ApiResource  {
 
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'pwf_tasks';
-    }
+    const RESOURCE_NAME = "tasks";
 
-    public function beforeValidate()
-    {
-        if ($this->projectid == 0) {
-            return false;
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id', 'projectid', 'name', 'priority', 'type', 'status'], 'required'],
-            [['id', 'projectid', 'categoryid', 'projectnumber', 'order1', 'order2', 'order3', 'priority', 'projectmanagerid', 'creatorid'], 'integer'],
-            [['completeddate', 'lastmodified', 'startdate', 'duedate'], 'safe'],
-            [['description'], 'string'],
-            [['categoryname', 'projectstatus', 'projectcategoryname', 'projectmanagername', 'creatorname', 'type'], 'string', 'max' => 128],
-            [['name', 'projecttitle'], 'string', 'max' => 256],
-            [['status'], 'string', 'max' => 64],
-            [['projectid'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['projectid' => 'id']],
-        ];
+    public static function instance() {
+        return new self(self::RESOURCE_NAME);
     }
 
     /**
@@ -101,24 +75,6 @@ class Task extends ApiResource  {
             'type' => 'Type',
             'status' => 'Status',
         ];
-    }
-
-    public static function getResourcePath()
-    {
-        return '/tasks/';
-    }
-
-    public static function getResourceName()
-    {
-        return 'tasks';
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProject()
-    {
-        return $this->hasOne(Project::className(), ['id' => 'projectid']);
     }
 
 }

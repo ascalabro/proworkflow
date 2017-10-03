@@ -3,5 +3,7 @@ namespace proworkflow\interfaces;
 
 interface HasResourceEndpointInterface
 {
-    public static function getResourcePath();
+    public function getResourcePath();
+
+    public function getResourceName();
 }
