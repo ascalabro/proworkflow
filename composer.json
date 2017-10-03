@@ -1,0 +1,21 @@
+{
+    "name": "ascalabro/proworkflow",
+    "description": "A PHP wrapper for the Proworkflow API",
+    "require": {
+        "guzzlehttp/guzzle": "6.3.*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Angelo Scalabroni",
+            "email": "ascalabro@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "proworkflow\\": "src/"
+        }
+    }
+}

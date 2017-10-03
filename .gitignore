@@ -1,0 +1,6 @@
+# Composer packages
+vendor
+
+# Directories created by IDE
+.idea
+nbproject

@@ -1,0 +1,124 @@
+<?php
+namespace proworkflow\resources;
+
+use proworkflow\interfaces\HasResourceEndpointInterface;
+
+/**
+ * This is the model class for table "pwf_tasks", which is
+ * updated with data from the PWF API https://api.proworkflow.net/?calls
+ * Check app\commands\ProworkflowController
+ *
+ * @property integer $id
+ * @property integer $projectid
+ * @property integer $categoryid
+ * @property string $categoryname
+ * @property string $completeddate
+ * @property string $lastmodified
+ * @property string $name
+ * @property string $description
+ * @property integer $projectnumber
+ * @property string $projectstatus
+ * @property string $projecttitle
+ * @property string $startdate
+ * @property integer $order1
+ * @property integer $order2
+ * @property integer $order3
+ * @property integer $priority
+ * @property string $projectcategoryname
+ * @property integer $projectmanagerid
+ * @property string $projectmanagername
+ * @property string $creatorname
+ * @property integer $creatorid
+ * @property string $duedate
+ * @property string $type
+ * @property string $status
+ *
+ * @property Project $project
+ *
+ */
+class Task extends ApiResource  {
+
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'pwf_tasks';
+    }
+
+    public function beforeValidate()
+    {
+        if ($this->projectid == 0) {
+            return false;
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['id', 'projectid', 'name', 'priority', 'type', 'status'], 'required'],
+            [['id', 'projectid', 'categoryid', 'projectnumber', 'order1', 'order2', 'order3', 'priority', 'projectmanagerid', 'creatorid'], 'integer'],
+            [['completeddate', 'lastmodified', 'startdate', 'duedate'], 'safe'],
+            [['description'], 'string'],
+            [['categoryname', 'projectstatus', 'projectcategoryname', 'projectmanagername', 'creatorname', 'type'], 'string', 'max' => 128],
+            [['name', 'projecttitle'], 'string', 'max' => 256],
+            [['status'], 'string', 'max' => 64],
+            [['projectid'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['projectid' => 'id']],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'projectid' => 'Project ID',
+            'categoryid' => 'Category ID',
+            'categoryname' => 'Category Name',
+            'completeddate' => 'Completed Date',
+            'lastmodified' => 'Last Modified',
+            'name' => 'Name',
+            'description' => 'Description',
+            'projectnumber' => 'Project Number',
+            'projectstatus' => 'Project Status',
+            'projecttitle' => 'Project Title',
+            'startdate' => 'Start Date',
+            'order1' => 'Order1',
+            'order2' => 'Order2',
+            'order3' => 'Order3',
+            'priority' => 'Priority',
+            'projectcategoryname' => 'Project Category Name',
+            'projectmanagerid' => 'Project Manager ID',
+            'projectmanagername' => 'Project Manager Name',
+            'creatorname' => 'Creator Name',
+            'creatorid' => 'Creator ID',
+            'duedate' => 'Due Date',
+            'type' => 'Type',
+            'status' => 'Status',
+        ];
+    }
+
+    public static function getResourcePath()
+    {
+        return '/tasks/';
+    }
+
+    public static function getResourceName()
+    {
+        return 'tasks';
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProject()
+    {
+        return $this->hasOne(Project::className(), ['id' => 'projectid']);
+    }
+
+}
