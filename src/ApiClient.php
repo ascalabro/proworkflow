@@ -1,8 +1,11 @@
 <?php
 namespace proworkflow;
 
+use proworkflow\resources\Contact;
 use proworkflow\resources\Message;
 use proworkflow\resources\Project;
+use proworkflow\resources\settings\Account;
+use proworkflow\resources\settings\Setting;
 use proworkflow\resources\Task;
 use GuzzleHttp;
 
@@ -86,6 +89,40 @@ class ApiClient {
             return $response->messages; // array of messages
         } elseif (isset($response->message)) {
             return $response->message; // single message
+        } else {
+            throw new \Exception('Unexpected response came back from API');
+        }
+    }
+
+    /**
+     * If $messageId is not specified, all tasks which the user can see are returned
+     * @param string $contactId
+     * @return mixed
+     */
+    public function contacts($contactId = '') {
+        $r = $this->client->request('GET', Contact::instance()->getResourcePath() . $contactId)->getBody();
+        $response = \GuzzleHttp\json_decode($r->getContents());
+        if (isset($response->contacts)) {
+            return $response->contacts; // array of messages
+        } elseif (isset($response->contact)) {
+            return $response->contact; // single message
+        } else {
+            throw new \Exception('Unexpected response came back from API');
+        }
+    }
+
+    /**
+     * If $messageId is not specified, all tasks which the user can see are returned
+     * @param string $settingId
+     * @return mixed
+     */
+    public function accountSettings($contactId = '') {
+        $r = $this->client->request('GET', Account::instance()->getResourcePath() . $contactId)->getBody();
+        $response = \GuzzleHttp\json_decode($r->getContents());
+        if (isset($response->settings)) {
+            return $response->settings; // array of messages
+        } elseif (isset($response->settings)) {
+            return $response->settings; // single message
         } else {
             throw new \Exception('Unexpected response came back from API');
         }

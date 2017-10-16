@@ -1,12 +1,8 @@
 <?php
 namespace proworkflow\resources;
 
-
 /**
- * This is the model class for table "pwf_projects", which is
- * updated with data from the PWF API https://api.proworkflow.net/?calls
- * Check app\commands\ProworkflowController
- *
+ * Proworkflow Project
  *
  * @property integer $id
  * @property integer $number

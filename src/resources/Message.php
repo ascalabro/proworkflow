@@ -1,12 +1,8 @@
 <?php
 namespace proworkflow\resources;
 
-use proworkflow\interfaces\HasResourceEndpointInterface;
-
 /**
- * This is the model class for table "pwf_tasks", which is
- * updated with data from the PWF API https://api.proworkflow.net/?calls
- * Check app\commands\ProworkflowController
+ * Proworkflow Message
  *
  * @property integer $id
  * @property integer $projectid
@@ -32,8 +28,6 @@ use proworkflow\interfaces\HasResourceEndpointInterface;
  * @property string $duedate
  * @property string $type
  * @property string $status
- *
- * @property Project $project
  *
  */
 class Message extends ApiResource {
